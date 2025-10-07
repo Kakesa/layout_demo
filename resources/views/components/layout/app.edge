@@ -3,9 +3,16 @@
 <head>
   <meta charset="utf-8">
   <title>{{ title }}</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @theme {
+        --color-clifford: #da373d;
+      }
+    </style>
   
 </head>
 <body>
   {{{ await $slots.main() }}}
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
 </body>
 </html>

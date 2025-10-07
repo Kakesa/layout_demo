@@ -1,36 +1,109 @@
-<style>
-  nav {
-    background-color: #333;
-    overflow: hidden;
+<div class="bg-white min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-white shadow-md w-full z-20 fixed top-0 left-0">
+    <nav aria-label="Top" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <a href="#">
+            <img
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+              alt="Logo"
+              class="h-8 w-auto"
+            />
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex space-x-8">
+          <a href="#" class="text-sm font-medium text-gray-700 hover:text-indigo-600">Women</a>
+          <a href="#" class="text-sm font-medium text-gray-700 hover:text-indigo-600">Men</a>
+          <a href="#" class="text-sm font-medium text-gray-700 hover:text-indigo-600">Company</a>
+          <a href="#" class="text-sm font-medium text-gray-700 hover:text-indigo-600">Stores</a>
+        </div>
+
+        <!-- Icons -->
+        <div class="hidden md:flex items-center space-x-4">
+          <button class="text-gray-500 hover:text-indigo-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="m21 21-5.197-5.197M16.5 10.5a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" />
+            </svg>
+          </button>
+          <button class="relative text-gray-500 hover:text-indigo-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5M5 10.5h14l-1.25 11H6.25L5 10.5Z" />
+            </svg>
+            <span
+              class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full px-1.5">0</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-btn"
+            class="text-gray-600 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3.75 5.25h16.5M3.75 12h16.5m-16.5 6.75h16.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Navigation Overlay (déroule de la droite) -->
+  <div id="mobile-menu" class="fixed inset-0 z-30 hidden">
+    <!-- Fond semi-opaque -->
+    <div class="absolute inset-0 bg-black opacity-50" id="mobile-menu-backdrop"></div>
+    <!-- Menu qui glisse de la droite -->
+    <div class="absolute top-0 right-0 h-full w-3/4 max-w-sm bg-white shadow-lg transform translate-x-full transition-transform duration-300"
+         id="mobile-menu-panel">
+      <div class="p-6 space-y-6">
+        <button id="mobile-menu-close" class="text-gray-600 hover:text-indigo-600 focus:outline-none text-lg">
+          ✕
+        </button>
+        <nav class="space-y-4 mt-4">
+          <a href="#" class="block text-gray-700 hover:text-indigo-600">Women</a>
+          <a href="#" class="block text-gray-700 hover=text-indigo-600">Men</a>
+          <a href="#" class="block text-gray-700 hover:text-indigo-600">Company</a>
+          <a href="#" class="block text-gray-700 hover:text-indigo-600">Stores</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+  const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+  function openMobileMenu() {
+    mobileMenu.classList.remove('hidden');
+    // forcer reflow pour activer l’animation
+    mobileMenuPanel.getBoundingClientRect();
+    mobileMenuPanel.classList.remove('translate-x-full');
+    mobileMenuPanel.classList.add('translate-x-0');
   }
 
-  nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  function closeMobileMenu() {
+    mobileMenuPanel.classList.remove('translate-x-0');
+    mobileMenuPanel.classList.add('translate-x-full');
+    mobileMenuPanel.addEventListener('transitionend', () => {
+      mobileMenu.classList.add('hidden');
+    }, { once: true });
   }
 
-  nav ul li {
-    float: left;
-  }
-
-  nav ul li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-
-  nav ul li a:hover {
-    background-color: #111;
-  }
-</style>
-
-<nav>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/contact">Contact</a></li>
-  </ul>
-</nav>
+  mobileMenuBtn.addEventListener('click', openMobileMenu);
+  mobileMenuClose.addEventListener('click', closeMobileMenu);
+  mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+</script>
